@@ -161,6 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   bulletPrefab: {fileID: 2196690094400452635}
   weaponStage: 1
+  weaponLevel: 1
   scanRange: 10
   weaponRange: 15
   maxAmmo: 10

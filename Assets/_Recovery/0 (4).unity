@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   bulletPrefab: {fileID: 2196690094400452635, guid: f0cf2118a7386de4cae8e8725d3e1e36, type: 3}
-  weaponStage: 2
+  weaponStage: 1
   weaponLevel: 1
   scanRange: 10
   weaponRange: 15

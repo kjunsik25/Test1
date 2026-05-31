@@ -5,6 +5,7 @@ public class Weapon : MonoBehaviour
     [Header("무기 정보 및 프리펩")]
     public GameObject bulletPrefab;
     [Range(1, 3)] public int weaponStage = 1; // 1, 2, 3단계 조절 변수
+    [Range(1, 3)] public int weaponLevel = 1; // 1, 2, 3단계의 무기 레벨
     public float scanRange = 10f;
     public float weaponRange = 15f; // 총알에 전달할 최대 사거리
 
@@ -63,6 +64,8 @@ public class Weapon : MonoBehaviour
         switch (weaponStage)
         {
             case 1:
+
+  
                 // 1단계: 1발씩 발사 후 잔탄수 감소
                 CreateBullet(baseDir, false);
                 currentAmmo--;
@@ -77,14 +80,34 @@ public class Weapon : MonoBehaviour
                 // 2단계: 메인(적 방향) 1발 + 120도 간격 사이드 2발 (삼각형 배치)
                 CreateBullet(baseDir, false);
 
-                // 좌우 120도 회전된 방향 계산
-                Vector3 leftDir = Quaternion.Euler(0, 0, 120) * baseDir;
-                Vector3 rightDir = Quaternion.Euler(0, 0, -120) * baseDir;
+                switch (weaponLevel)
+                {
 
-                CreateBullet(leftDir, false);  // 뒤쪽 대각선 탄 1 (유도 없음)
-                CreateBullet(rightDir, false); // 뒤쪽 대각선 탄 2 (유도 없음)
+
+
+                    // 좌우 60도 회전된 방향 계산
+                    case 1:
+                        Vector3 leftDir = Quaternion.Euler(0, 0, 60) * baseDir;
+                        Vector3 rightDir = Quaternion.Euler(0, 0, -60) * baseDir;
+
+                        CreateBullet(leftDir, false);  // 뒤쪽 대각선 탄 1 (유도 없음)
+                        CreateBullet(rightDir, false); // 뒤쪽 대각선 탄 2 (유도 없음)
+                        break;
+                    case 2:
+                        Vector3 leftDir1 = Quaternion.Euler(0, 0, 60) * baseDir;
+                        Vector3 leftDir2 = Quaternion.Euler(0, 0, 60) * baseDir;
+
+                        Vector3 rightDir1 = Quaternion.Euler(0, 0, -60) * baseDir;
+                        Vector3 rightDir2 = Quaternion.Euler(0, 0, -60) * baseDir;
+
+                        CreateBullet(leftDir1, false);  // 뒤쪽 대각선 탄 1 (유도 없음)
+                        CreateBullet(rightDir1, false); // 뒤쪽 대각선 탄 2 (유도 없음)
+                        CreateBullet(leftDir2, false);  // 뒤쪽 대각선 탄 1 (유도 없음)
+                        CreateBullet(rightDir2, false); // 뒤쪽 대각선 탄 2 (유도 없음)
+                        break;
+
+                }
                 break;
-
             case 3:
                 // 3단계: 기본 0.25초 주기 탄 (고성능 유도)
                 CreateBullet(baseDir, true);

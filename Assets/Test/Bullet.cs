@@ -25,6 +25,11 @@ public class Bullet : MonoBehaviour
     public void SetRange(float range)
     {
         maxRange = range;
+
+        if(traveledDistance > maxRange)
+        {
+            Destroy(bullet);
+        }
     }
 
     // 기본 직선 발사 설정
