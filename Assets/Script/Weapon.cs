@@ -76,14 +76,25 @@ public class Weapon : MonoBehaviour
                     
                         break;
                     case 2:
-                        
-                        Vector3 upDir = new Vector3 (baseDir.x +1 , baseDir.y + 1,baseDir.z);
-                        Vector3 downDir = new Vector3(baseDir.x -1, baseDir.y -1, baseDir.z);
+                        GameObject upBullet = Instantiate(bulletPrefab, transform.position + Vector3.up * 0.3f, transform.rotation);
+                        GameObject downBullet = Instantiate(bulletPrefab, transform.position + Vector3.down * 0.3f, transform.rotation);
+                        Vector3 upDir = new Vector3 (baseDir.x, baseDir.y ,baseDir.z );
+                        Vector3 downDir = new Vector3(baseDir.x, baseDir.y, baseDir.z);
 
-                        CreateBullet(baseDir, false);
-                        CreateBullet(upDir, false);
-                        CreateBullet(downDir,false);
+                        Bullet bullet = upBullet.GetComponent<Bullet>();
+                        if (bullet != null)
+                        {
+                            bullet.SetRange(weaponRange);
 
+                            bullet.Launch(upDir);
+                        }
+                        Bullet bullet2 = downBullet.GetComponent<Bullet>();
+                        if (bullet2 != null)
+                        {
+                            bullet2.SetRange(weaponRange);
+
+                            bullet2.Launch(downDir);
+                        }
                         currentAmmo--;
 
                         break;

@@ -32,11 +32,14 @@ public class Bullet : MonoBehaviour
         }
     }
 
+  
+    
     // 기본 직선 발사 설정
     public void Launch(Vector3 direction)
     {
         targetDirection = direction.normalized;
         RotateTowardsDirection(targetDirection);
+
     }
 
     // 3단계용 고성능 유도 발사 설정
