@@ -65,10 +65,29 @@ public class Weapon : MonoBehaviour
         {
             case 1:
 
-  
                 // 1단계: 1발씩 발사 후 잔탄수 감소
-                CreateBullet(baseDir, false);
-                currentAmmo--;
+                switch (weaponLevel)
+                {
+                    case 1:
+                        CreateBullet(baseDir, false);
+
+                        currentAmmo--;
+
+                    
+                        break;
+                    case 2:
+                        
+                        Vector3 upDir = new Vector3 (baseDir.x +1 , baseDir.y + 1,baseDir.z);
+                        Vector3 downDir = new Vector3(baseDir.x -1, baseDir.y -1, baseDir.z);
+
+                        CreateBullet(baseDir, false);
+                        CreateBullet(upDir, false);
+                        CreateBullet(downDir,false);
+
+                        currentAmmo--;
+
+                        break;
+                }
 
                 if (currentAmmo <= 0)
                 {
@@ -86,24 +105,46 @@ public class Weapon : MonoBehaviour
 
 
                     // 좌우 60도 회전된 방향 계산
-                    case 1:
+                    case 1: //3발 샷건
                         Vector3 leftDir = Quaternion.Euler(0, 0, 60) * baseDir;
                         Vector3 rightDir = Quaternion.Euler(0, 0, -60) * baseDir;
 
                         CreateBullet(leftDir, false);  // 뒤쪽 대각선 탄 1 (유도 없음)
                         CreateBullet(rightDir, false); // 뒤쪽 대각선 탄 2 (유도 없음)
                         break;
-                    case 2:
+                    case 2: // 5발 샷건
                         Vector3 leftDir1 = Quaternion.Euler(0, 0, 60) * baseDir;
-                        Vector3 leftDir2 = Quaternion.Euler(0, 0, 60) * baseDir;
+                        Vector3 leftDir2 = Quaternion.Euler(0, 0, 30) * baseDir;
 
                         Vector3 rightDir1 = Quaternion.Euler(0, 0, -60) * baseDir;
-                        Vector3 rightDir2 = Quaternion.Euler(0, 0, -60) * baseDir;
+                        Vector3 rightDir2 = Quaternion.Euler(0, 0, -30) * baseDir;
 
                         CreateBullet(leftDir1, false);  // 뒤쪽 대각선 탄 1 (유도 없음)
                         CreateBullet(rightDir1, false); // 뒤쪽 대각선 탄 2 (유도 없음)
                         CreateBullet(leftDir2, false);  // 뒤쪽 대각선 탄 1 (유도 없음)
                         CreateBullet(rightDir2, false); // 뒤쪽 대각선 탄 2 (유도 없음)
+                        break;
+                    case 3: // 9발 샷건
+                        Vector3 leftDir3_1 = Quaternion.Euler(0, 0, 15) * baseDir;
+                        Vector3 leftDir3_2 = Quaternion.Euler(0, 0, 30) * baseDir;
+                        Vector3 leftDir3_3 = Quaternion.Euler(0, 0, 45) * baseDir;
+                        Vector3 leftDir3_4 = Quaternion.Euler(0, 0, 60) * baseDir;
+
+
+                        Vector3 rightDir3_1 = Quaternion.Euler(0, 0, -15) * baseDir;
+                        Vector3 rightDir3_2 = Quaternion.Euler(0, 0, -30) * baseDir;
+                        Vector3 rightDir3_3 = Quaternion.Euler(0, 0, -45) * baseDir;
+                        Vector3 rightDir3_4 = Quaternion.Euler(0, 0, -60) * baseDir;
+
+                        CreateBullet(leftDir3_1, false);  // 뒤쪽 대각선 탄 1 (유도 없음)
+                        CreateBullet(rightDir3_1, false); // 뒤쪽 대각선 탄 2 (유도 없음)
+                        CreateBullet(leftDir3_2, false);  // 뒤쪽 대각선 탄 1 (유도 없음)
+                        CreateBullet(rightDir3_2, false); // 뒤쪽 대각선 탄 2 (유도 없음)
+                        CreateBullet(leftDir3_3, false);
+                        CreateBullet(rightDir3_3, false);
+                        CreateBullet(leftDir3_4, false);
+                        CreateBullet(rightDir3_4, false);
+
                         break;
 
                 }
