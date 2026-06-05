@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -48,11 +49,35 @@ public class Weapon : MonoBehaviour
         }
 
         // --- 3단계 전방위 추가 공격 타이머 체크 ---
-        if (weaponStage == 3 && burstTimer >= 1f)
+        if (weaponStage == 3 && burstTimer >=5f)
         {
-            burstTimer = 0f;
-            FindClosestEnemy();
-            FireOmniDirectional();
+            switch (weaponLevel)
+            {
+                case 1:
+
+                    burstTimer = 0f;
+                    FindClosestEnemy();
+                    FireOmniDirectional();
+
+                    break;
+
+                case 2:
+
+                    burstTimer = 2.5f;
+                    FindClosestEnemy();
+                    FireOmniDirectional();
+
+                    break;
+
+                case 3:
+
+                    burstTimer = 4f;
+                    FindClosestEnemy();
+                    FireOmniDirectional();
+
+                    break;
+            }
+            
         }
     }
 
@@ -76,8 +101,9 @@ public class Weapon : MonoBehaviour
                     
                         break;
                     case 2:
-                        GameObject upBullet = Instantiate(bulletPrefab, transform.position + Vector3.up * 0.3f, transform.rotation);
-                        GameObject downBullet = Instantiate(bulletPrefab, transform.position + Vector3.down * 0.3f, transform.rotation);
+                        GameObject upBullet = Instantiate(bulletPrefab, transform.position + Vector3.up * 0.4f, transform.rotation);
+                        GameObject downBullet = Instantiate(bulletPrefab, transform.position + Vector3.down * 0.4f, transform.rotation);
+
                         Vector3 upDir = new Vector3 (baseDir.x, baseDir.y ,baseDir.z );
                         Vector3 downDir = new Vector3(baseDir.x, baseDir.y, baseDir.z);
 
@@ -97,6 +123,49 @@ public class Weapon : MonoBehaviour
                         }
                         currentAmmo--;
 
+                        break;
+                    case 3:
+
+                        GameObject upBullet_1 = Instantiate(bulletPrefab, transform.position + Vector3.up *0.4f, transform.rotation);
+                        GameObject upBullet_2 = Instantiate(bulletPrefab, transform.position + Vector3.up * 0.8f, transform.rotation);
+                        GameObject downBullet_1 = Instantiate(bulletPrefab, transform.position + Vector3.down * 0.4f, transform.rotation);
+                        GameObject downBullet_2 = Instantiate(bulletPrefab, transform.position + Vector3.down * 0.8f, transform.rotation);
+
+
+                        Vector3 upDir_1 = new Vector3(baseDir.x,baseDir.y,baseDir.z);
+
+                        Bullet upbullet1 = upBullet_1.GetComponent<Bullet>();
+                        if (upbullet1 != null)
+                        {
+                            upbullet1.SetRange (weaponRange);
+                            upbullet1.Launch(upDir_1);
+                        }
+
+                        Bullet upbullet2 = upBullet_2.GetComponent<Bullet>();
+                        if (upbullet2 != null)
+                        {
+                            upbullet2.SetRange(weaponRange);
+                            upbullet2.Launch(upDir_1);
+                        }
+
+                        Bullet downbullet1 = downBullet_1.GetComponent<Bullet>();
+                        if (downbullet1 != null)
+                        {
+                            downbullet1.SetRange(weaponRange);
+                            downbullet1.Launch(upDir_1);
+                        }
+
+                        Bullet downbullet2 = downBullet_2.GetComponent<Bullet>();
+                        if (downbullet2 != null)
+                        {
+                            downbullet2.SetRange(weaponRange);
+                            downbullet2.Launch(upDir_1);
+                        }
+
+                        CreateBullet(baseDir, false);
+
+                        currentAmmo--;
+                        
                         break;
                 }
 
@@ -161,6 +230,9 @@ public class Weapon : MonoBehaviour
                 }
                 break;
             case 3:
+                
+                
+
                 // 3단계: 기본 0.25초 주기 탄 (고성능 유도)
                 CreateBullet(baseDir, true);
                 break;
@@ -197,7 +269,9 @@ public class Weapon : MonoBehaviour
             if (useStrongHoming && target != null)
             {
                 bullet.Launch(direction);
+                
                 bullet.LaunchHoming(target, 15f);
+
             }
             else
             {
